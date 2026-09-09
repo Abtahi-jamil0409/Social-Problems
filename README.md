@@ -1,4 +1,3 @@
-# Social-Problems
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -36,6 +35,7 @@
             box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 8px 24px -6px rgba(0, 20, 60, 0.5);
             overflow: hidden;
             border: 1px solid #1e2a3a;
+            position: relative;
         }
 
         /* ---------- SIDEBAR (black & blue) ---------- */
@@ -48,6 +48,17 @@
             flex-direction: column;
             flex-shrink: 0;
             overflow-y: auto;
+            transition: transform 0.3s ease, width 0.3s ease, margin 0.3s ease;
+            z-index: 10;
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
+            width: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+            overflow: hidden;
         }
 
         .sidebar::-webkit-scrollbar {
@@ -92,6 +103,31 @@
             align-items: center;
             gap: 8px;
             font-weight: 400;
+        }
+
+        /* sidebar toggle button */
+        .sidebar-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            background: #1a3a6a;
+            color: #e8f0ff;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-toggle:hover {
+            background: #2a5a9a;
+            transform: scale(1.05);
         }
 
         .home-btn {
@@ -192,7 +228,7 @@
             color: #3b8cff;
         }
 
-        /* ---------- MAIN CONTENT (পুরো এলাকা জুড়ে) ---------- */
+        /* ---------- MAIN CONTENT ---------- */
         .content {
             flex: 1;
             background: #111822;
@@ -200,6 +236,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transition: padding 0.3s ease;
         }
 
         .content::-webkit-scrollbar {
@@ -214,7 +251,7 @@
             border-radius: 20px;
         }
 
-        /* homepage - আমাদের কাজ ও উদ্দেশ্য সহ */
+        /* homepage */
         .homepage-content {
             display: flex;
             flex-direction: column;
@@ -242,7 +279,6 @@
             margin-bottom: 28px;
         }
 
-        /* আমাদের কাজ ও উদ্দেশ্য সেকশন */
         .mission-section {
             background: #0f1a2e;
             padding: 28px 32px;
@@ -318,7 +354,7 @@
             border-left: 8px solid #3b8cff;
         }
 
-        /* topic view - ফুল স্ক্রিনে */
+        /* topic view */
         .topic-header {
             display: flex;
             align-items: baseline;
@@ -444,23 +480,26 @@
                 border-radius: 28px;
             }
             .sidebar {
-                width: 100%;
-                max-height: 220px;
-                border-right: none;
-                border-bottom: 2px solid #1a2a40;
-                padding: 14px 12px;
-                flex-shrink: 0;
-                flex-direction: row;
-                flex-wrap: wrap;
-                align-items: center;
-                gap: 6px 10px;
-                overflow-y: auto;
+                width: 280px;
+                max-height: 100%;
+                border-right: 2px solid #1a2a40;
+                padding: 20px 16px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                background: #0d121c;
+                border-radius: 28px 0 0 28px;
+                transform: translateX(0);
+                transition: transform 0.3s ease;
+                z-index: 15;
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6);
             }
-            .sidebar-header {
-                border-bottom: none;
-                padding-bottom: 4px;
-                margin-bottom: 4px;
-                width: 100%;
+            .sidebar.closed {
+                transform: translateX(-105%);
+                width: 280px;
+                padding: 20px 16px;
+                border: none;
             }
             .sidebar-header h2 {
                 font-size: 1.3rem;
@@ -469,44 +508,33 @@
                 display: none;
             }
             .home-btn {
-                padding: 6px 16px;
-                font-size: 0.9rem;
-                margin-bottom: 4px;
+                padding: 8px 16px;
+                font-size: 0.95rem;
                 border-radius: 40px;
                 border-left: none;
-                background: #1a3a6a;
-            }
-            .topic-list {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 4px 8px;
-                margin-top: 2px;
-                flex: 1;
-                align-items: center;
             }
             .topic-list li {
-                padding: 5px 14px 5px 12px;
+                padding: 8px 14px;
                 border-radius: 40px;
                 border-left: none;
-                background: #1a2338;
-                font-size: 0.85rem;
-                margin-bottom: 2px;
-                white-space: nowrap;
-                gap: 4px;
-                color: #b0caf0;
+                font-size: 0.95rem;
             }
             .topic-list li i {
-                display: none;
+                display: inline-block;
+                width: 22px;
             }
             .topic-list li .badge {
-                display: none;
-            }
-            .topic-list li.active {
-                background: #1a3a6a;
-                color: #ffffff;
+                display: inline-block;
             }
             .sidebar-footer {
-                display: none;
+                display: flex;
+            }
+            .sidebar-toggle {
+                top: 16px;
+                left: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
             }
             .content {
                 padding: 22px 18px;
@@ -523,6 +551,10 @@
             .mission-section .mission-list {
                 flex-direction: column;
                 gap: 10px;
+            }
+            /* sidebar open state for mobile */
+            .sidebar.closed+.content {
+                padding-left: 18px;
             }
         }
 
@@ -545,6 +577,9 @@
             .mission-section h2 {
                 font-size: 1.3rem;
             }
+            .sidebar {
+                width: 260px;
+            }
         }
 
         .topic-list li .fa-arrow-right {
@@ -562,8 +597,13 @@
 
     <div class="site-container">
 
+        <!-- SIDEBAR TOGGLE BUTTON -->
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+
         <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>
                     <i class="fas fa-landmark"></i>
@@ -588,9 +628,9 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT (পুরো এলাকা) -->
+        <!-- MAIN CONTENT -->
         <main class="content" id="contentArea">
-            <!-- HOMEPAGE - আমাদের কাজ ও উদ্দেশ্য সহ -->
+            <!-- HOMEPAGE -->
             <div id="homepageView">
                 <div class="homepage-content">
                     <h1><i class="fas fa-bangladesh-taka"></i> সামাজিক ও রাজনৈতিক <br>বাংলা ব্লগ</h1>
@@ -599,14 +639,13 @@
                         বাংলাদেশের সমাজ ও রাজনীতির নানা সমস্যা নিয়ে আলোচনা। বাম পাশের সাইডবার থেকে যেকোনো টপিক নির্বাচন করুন।
                     </p>
 
-                    <!-- আমাদের কাজ ও উদ্দেশ্য -->
                     <div class="mission-section">
                         <h2><i class="fas fa-bullseye"></i> আমাদের কাজ ও উদ্দেশ্য</h2>
                         <p>
                             এই প্ল্যাটফর্মটির মূল লক্ষ্য হলো বাংলাদেশের সমাজ ও রাজনীতির জটিল সমস্যাগুলোকে সহজ, বিশ্লেষণধর্মী ও তথ্যভিত্তিক আলোচনার মাধ্যমে তুলে ধরা। আমরা বিশ্বাস করি, সঠিক তথ্য ও যুক্তিপূর্ণ বক্তব্য সমাজকে ইতিবাচক পরিবর্তনের পথে এগিয়ে নিতে পারে।
                         </p>
                         <ul class="mission-list">
-                            <li><i class="fas fa-check-circle"></i> গণতন্ত্র, ধর্মনিরপেক্ষতা, নারীবাদ, শিক্ষাব্যবস্থা, পুঁজিবাদ ও সমাজতন্ত্র—এই ছয়টি মূল বিষয়ের ওপর গভীর বিশ্লেষণ</li>
+                            <li><i class="fas fa-check-circle"></i> গণতন্ত্র, সেকুলারিজম, নারীবাদ, শিক্ষাব্যবস্থা, পুঁজিবাদ ও সমাজতন্ত্র—এই ছয়টি মূল বিষয়ের ওপর গভীর বিশ্লেষণ</li>
                             <li><i class="fas fa-check-circle"></i> ঐতিহাসিক, তাত্ত্বিক ও বাস্তবমুখী দৃষ্টিভঙ্গি থেকে সমস্যাগুলোর ব্যবচ্ছেদ</li>
                             <li><i class="fas fa-check-circle"></i> প্রামাণ্য ভিডিও, বই ও গবেষণার আলোকে তথ্য উপস্থাপন</li>
                             <li><i class="fas fa-check-circle"></i> পাঠকদের চিন্তার স্বাধীনতা ও সমালোচনামূলক দৃষ্টিভঙ্গি গঠনে সহায়তা</li>
@@ -615,7 +654,7 @@
 
                     <div class="feature-grid">
                         <div class="feature-item"><i class="fas fa-landmark"></i> গণতন্ত্র</div>
-                        <div class="feature-item"><i class="fas fa-people-arrows"></i> ধর্মনিরপেক্ষতা</div>
+                        <div class="feature-item"><i class="fas fa-people-arrows"></i> সেকুলারিজম</div>
                         <div class="feature-item"><i class="fas fa-venus"></i> নারীবাদ</div>
                         <div class="feature-item"><i class="fas fa-chalkboard-teacher"></i> শিক্ষাব্যবস্থা</div>
                         <div class="feature-item"><i class="fas fa-chart-line"></i> পুঁজিবাদ</div>
@@ -630,7 +669,7 @@
                 </div>
             </div>
 
-            <!-- TOPIC VIEW (ফুল স্ক্রিন) -->
+            <!-- TOPIC VIEW -->
             <div id="topicView" class="hidden">
                 <div class="topic-header">
                     <h1 id="topicTitle">শিরোনাম</h1>
@@ -647,7 +686,7 @@
 
     <script>
         (function() {
-            // ----- TOPICS (গণতন্ত্র, ধর্মনিরপেক্ষতা, নারীবাদ, শিক্ষাব্যবস্থা, পুঁজিবাদ, সমাজতন্ত্র) -----
+            // ----- TOPICS (গণতন্ত্র, সেকুলারিজম, নারীবাদ, শিক্ষাব্যবস্থা, পুঁজিবাদ, সমাজতন্ত্র) -----
             const topics = [{
                 title: "গণতন্ত্রের সমস্যা",
                 tag: "রাজনীতি",
@@ -730,12 +769,27 @@
                         <p>যদি কোনো সমাজে উচ্চমানের শিক্ষার বিস্তার, প্রাতিষ্ঠানিক স্বচ্ছতা, শক্তিশালী বিচার ব্যবস্থা, সচেতন নাগরিক সমাজ এবং অর্থবিত্তের প্রভাবমুক্ত রাজনৈতিক সংস্কৃতির অভাব থাকে, তবে সেখানে গণতন্ত্র কখনোই জনগণের মুক্তি এনে দিতে পারে না। বরং তা ছদ্মবেশে সংখ্যাগরিষ্ঠের স্বৈরাচার, চরম দুর্নীতি এবং সামাজিক নৈরাজ্যেরই রূপ নেয়। তাই গণতন্ত্রকে অন্ধভাবে পূজা না করে এর অন্তর্নিহিত দুর্বলতাগুলোকে সঠিকভাবে অনুধাবন করা এবং এর বিকল্প বা পরিমার্জিত নীতি নিয়ে চিন্তা করাই আধুনিক রাষ্ট্রবিজ্ঞানের সবচেয়ে বড় চ্যালেঞ্জ।</p>
                     `
             }, {
-                title: "ধর্মনিরপেক্ষতার সংকট",
+                title: "সেকুলারিজমের সংকট",
                 tag: "সমাজ",
                 content: `
-                        <p><i class="fas fa-people-arrows" style="color:#3b8cff;"></i> ধর্মনিরপেক্ষতা বাংলাদেশের সংবিধানের মূল স্তম্ভ, কিন্তু বাস্তবে এটি বারবার চ্যালেঞ্জের মুখে পড়ে। সাম্প্রদায়িক সহিংসতা, ধর্মীয় সংখ্যালঘুদের ওপর আক্রমণ, ও রাজনৈতিক দলগুলোর ধর্মীয় আবেদন ধর্মনিরপেক্ষতাকে দুর্বল করে।</p>
-                        <p>শিক্ষা ব্যবস্থায় ধর্মীয় শিক্ষার প্রসার, গণমাধ্যমে সাম্প্রদায়িক বক্তব্য, ও আইন প্রয়োগের বৈষম্য—এই তিনটি বিষয় ধর্মনিরপেক্ষতার জন্য হুমকি।</p>
-                        <div class="highlight-box"><i class="fas fa-lightbulb"></i> “ধর্মনিরপেক্ষতা মানে ধর্মকে অস্বীকার করা নয়, বরং সব ধর্মের প্রতি সমান সম্মান ও রাষ্ট্রের নিরপেক্ষতা নিশ্চিত করা।”</div>
+                        <p><i class="fas fa-people-arrows" style="color:#3b8cff;"></i> সেকুলারিজম বা ধর্মনিরপেক্ষতা বাংলাদেশের সংবিধানের মূল স্তম্ভ, কিন্তু বাস্তবে এটি বারবার চ্যালেঞ্জের মুখে পড়ে। নিচের ভিডিওতে আসিফ আদনান 'সেক্যুলারিসম – শান্তি, সহিংসতা ও নিরপেক্ষতার মিথ' শীর্ষক আলোচনায় সেকুলার ব্যবস্থার মূল দাবি ও তার সমালোচনা তুলে ধরেছেন।</p>
+
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/22T9M5luDcE" allowfullscreen></iframe>
+                        </div>
+
+                        <div class="highlight-box">
+                            <i class="fas fa-video"></i> <strong>ভিডিওর মূল বক্তব্য (আসিফ আদনান):</strong><br>
+                            <ul style="list-style: none; padding-left: 10px; margin-top: 8px;">
+                                <li>• <strong>সেক্যুলার ব্যবস্থার মূল দাবি:</strong> ধর্মের কারণে বিভাজন ও সহিংসতা হয়, তাই সমাধান হলো ধর্মনিরপেক্ষ ব্যবস্থা।</li>
+                                <li>• <strong>প্রশ্ন:</strong> সেক্যুলার ব্যবস্থা কি আসলেই শান্তি আনে? সহিংসতা কি কেবল ধর্মই তৈরি করে?</li>
+                                <li>• <strong>বিশ্লেষণ:</strong> উইলিয়াম ক্যাভানো'-র 'The Myth of Religious Violence' বইয়ের আলোকে সেক্যুলার নিরপেক্ষতার দাবি পরীক্ষা করা হয়েছে।</li>
+                                <li>• <strong>উপসংহার:</strong> সেক্যুলার ব্যবস্থা যদি সত্যিই নিরপেক্ষ না হয়, তাহলে তার অস্তিত্বের মূল কারণই প্রশ্নবিদ্ধ হয়ে পড়ে।</li>
+                            </ul>
+                        </div>
+
+                        <p>সাম্প্রদায়িক সহিংসতা, ধর্মীয় সংখ্যালঘুদের ওপর আক্রমণ, ও রাজনৈতিক দলগুলোর ধর্মীয় আবেদন সেকুলারিজমকে দুর্বল করে। শিক্ষা ব্যবস্থায় ধর্মীয় শিক্ষার প্রসার, গণমাধ্যমে সাম্প্রদায়িক বক্তব্য, ও আইন প্রয়োগের বৈষম্য—এই তিনটি বিষয় সেকুলারিজমের জন্য হুমকি।</p>
+                        <div class="highlight-box"><i class="fas fa-lightbulb"></i> “সেকুলারিজম মানে ধর্মকে অস্বীকার করা নয়, বরং সব ধর্মের প্রতি সমান সম্মান ও রাষ্ট্রের নিরপেক্ষতা নিশ্চিত করা।”</div>
                         <p><strong>সমাধান:</strong> সাম্প্রদায়িক বক্তব্য নিয়ন্ত্রণ, সংখ্যালঘুদের নিরাপত্তা নিশ্চিত করা, ও শিক্ষায় মানবতাবাদী মূল্যবোধ প্রসারিত করা জরুরি।</p>
                     `
             }, {
@@ -785,8 +839,20 @@
             const contentEl = document.getElementById('articleContent');
             const pageIndicator = document.getElementById('pageIndicator');
             const homeBtn = document.getElementById('homeBtn');
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
 
             let activeIndex = -1;
+            let sidebarOpen = true;
+
+            // toggle sidebar
+            function toggleSidebar() {
+                sidebarOpen = !sidebarOpen;
+                sidebar.classList.toggle('closed', !sidebarOpen);
+                toggleBtn.innerHTML = sidebarOpen ? '<i class="fas fa-bars"></i>' : '<i class="fas fa-bars"></i>';
+            }
+
+            toggleBtn.addEventListener('click', toggleSidebar);
 
             // render sidebar
             function renderSidebar() {
@@ -824,6 +890,12 @@
                         const newIndex = parseInt(this.dataset.index, 10);
                         if (newIndex === activeIndex) return;
                         showTopic(newIndex);
+                        // close sidebar on mobile after selection
+                        if (window.innerWidth <= 820) {
+                            sidebar.classList.add('closed');
+                            sidebarOpen = false;
+                            toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
                     });
 
                     listEl.appendChild(li);
